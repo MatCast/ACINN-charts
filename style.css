@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Gruppo', cursive;
+}
+
+a:link {
+  color: #26a6f6;
+}
+
+a:visited {
+  color: #26a6f6;
+}
+
+a:hover {
+  color: #26a6f6;
+}
+
+a:active {
+  color: #26a6f6;
+}
+
+.temperature-wrapper {
+  margin: auto;
+  padding-bottom: 2.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+h1.temperature {
+  font-size: 25vmin;
+}
+
+h2.description {
+  font-size: 5.5vmin;
+}
+
+#page-wrapper {
+  -moz-animation: colorchange 30s ease infinite;
+  -o-animation: colorchange 30s ease infinite;
+  -webkit-animation: colorchange 30s ease infinite;
+  animation: colorchange 30s ease infinite;
+  background: linear-gradient(270deg, #73c4f7, #f7ee73, #f7c073, #f77a73);
+  background-size: 800% 800%;
+  display: flex;
+  min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  min-height: calc(var(--vh, 1vh) * 100);
+  /* transition: 1s; /* To avoid a jumpy result */ */
+  position: relative;
+  width: 100vw;
+}
+
+#footer {
+  background: #dfe8ee;
+  border-top: 0.2rem solid black;
+  bottom: 0;
+  box-sizing: border-box;
+  color: black;
+  /* height: 2.5rem; */
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  font-size: 2vmin;
+}
+
+@-webkit-keyframes colorchange {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes colorchange {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-o-keyframes colorchange {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes colorchange {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
