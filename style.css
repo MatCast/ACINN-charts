@@ -47,7 +47,6 @@ h2.description {
   display: flex;
   min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
   min-height: calc(var(--vh, 1vh) * 100);
-  /* transition: 1s; /* To avoid a jumpy result */ */
   position: relative;
   width: 100vw;
 }
