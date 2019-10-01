@@ -1,6 +1,6 @@
+const dataURL = 'http://acinn.uibk.ac.at/innsbruck/1';
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
-
 // Then we set the value in the --vh custom property to the root of the document
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
@@ -17,11 +17,9 @@ window.onresize = showViewport;
 function showViewport() {
   var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
   var height= Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  console.log("Viewport size is " + width + "x" + height);
 }
 
 function updateTemperature() {
-  const dataURL = 'http://acinn.uibk.ac.at/innsbruck/1';
   d3.json(dataURL).then(function(data) {
     const temperature = document.querySelector('.temperature');
     temperature.innerHTML = data.tl[data.tl.length - 1] + '°C';
@@ -31,13 +29,15 @@ function updateTemperature() {
     description.innerHTML = 'Innsbruck University Temperature on <br>' + date;
   });
 }
+
 updateTemperature();
-let interval = setInterval(updateTemperature, 5*60*1000);
-document.addEventListener('visibilitychange', function() {
-  if (document.visibilityState === 'visible') {
+let timer = new Date();
+
+function checkLastModified() {
+  let now = new Date();
+  if (now - timer > 5*60*1000) {
     updateTemperature();
-    interval = setInterval(updateTemperature, 5*60*1000);
-  } else {
-    clearInterval(interval);
+    timer = new Date();
   }
-});
+}
+let interval = setInterval(checkLastModified, 500);
