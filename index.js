@@ -1,4 +1,4 @@
-const dataURL = 'http://acinn.uibk.ac.at/innsbruck/1';
+const dataURL = 'data.json';
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
 // Then we set the value in the --vh custom property to the root of the document
@@ -22,7 +22,7 @@ function showViewport() {
 function updateTemperature() {
   d3.json(dataURL).then(function(data) {
     const temperature = document.querySelector('.temperature');
-    temperature.innerHTML = data.tl[data.tl.length - 1] + '°C';
+    temperature.innerHTML = data.tl[data.tl.length - 1] + '째C';
     const epoch = data.datumsec[data.datumsec.length - 1];
     const date = new Date(epoch).toLocaleString();
     const description = document.querySelector('.description');
