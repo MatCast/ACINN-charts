@@ -29,6 +29,13 @@ a:active {
   width: 100%;
 }
 
+.chart-wrapper {
+  margin: auto;
+  padding-bottom: 2.5rem;
+  text-align: center;
+  width: 100%;
+}
+
 h1.temperature {
   font-size: 25vmin;
 }

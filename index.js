@@ -19,25 +19,73 @@ function showViewport() {
   var height= Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
-function updateTemperature() {
+function updateTemperature(chart) {
   d3.json(dataURL).then(function(data) {
     const temperature = document.querySelector('.temperature');
-    temperature.innerHTML = data.tl[data.tl.length - 1] + '째C';
+    temperature.innerHTML = data.tl[data.tl.length - 1] + '&deg;C';
     const epoch = data.datumsec[data.datumsec.length - 1];
-    const date = new Date(epoch).toLocaleString();
+    const date = moment(epoch).format('dddd MMMM Do YYYY, h:mm:ss a');
     const description = document.querySelector('.description');
     description.innerHTML = 'Innsbruck University Temperature on <br>' + date;
+    addData(chart, data.datumsec, data.tl)
   });
 }
+var ctx = document.getElementById('tempChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
 
-updateTemperature();
+    // The data for our dataset
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Temeprature',
+            // backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [
+              // {x: new Date(), y: 175},
+              // {x: new Date(), y: 176},
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        scales: {
+            xAxes: [{
+                type: 'time',
+                time: {
+                  displayFormats: {
+                      hour: 'YYYY-MM-DD HH:mm'
+                  }
+                }
+            }]
+        }
+    }
+});
+updateTemperature(chart);
 let timer = new Date();
 
 function checkLastModified() {
   let now = new Date();
   if (now - timer > 5*60*1000) {
-    updateTemperature();
+    updateTemperature(chart);
     timer = new Date();
   }
 }
 let interval = setInterval(checkLastModified, 500);
+
+function addData(chart, labelArr, dataArr) {
+    labelArr.forEach((label) => {
+      // const epoch = label;
+      const date = moment(label);
+      chart.data.labels.push(date)
+    });
+    dataArr.forEach((data) => {
+      chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+      });
+    });
+
+    chart.update();
+}

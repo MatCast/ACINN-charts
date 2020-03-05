@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css?family=Gruppo&display=swap" rel="stylesheet">
     <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
     <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   </head>
   <body>
     <div id="page-wrapper">
@@ -18,8 +20,11 @@
         <h2 class="description"></h2>
         <h1 class="temperature"></h1>
       </div>
+      <div class="chart-wrapper">
+        <canvas id="tempChart"></canvas>
+      </div>
       <footer id="footer">
-        <div class="datasource">Thanks to the <a href="http://acinn.uibk.ac.at/">ACINN department</a> of Innsbruck University for the data
+        <div class="datasource">Thanks to the <a href="https://www.uibk.ac.at/acinn/">ACINN department</a> of Innsbruck University for the data
         </div>
       </footer>
     </div>
