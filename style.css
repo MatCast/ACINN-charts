@@ -31,17 +31,21 @@ a:active {
 
 .chart-wrapper {
   margin: auto;
-  padding-bottom: 2.5rem;
+  padding-bottom: 3rem;
   text-align: center;
   width: 100%;
 }
 
-h1.temperature {
-  font-size: 25vmin;
+/* #tempChart{
+  margin: 2rem;
+} */
+
+.temperature {
+  font-size: 5vmin;
 }
 
-h2.description {
-  font-size: 5.5vmin;
+.description {
+  font-size: 2.5vmin;
 }
 
 #page-wrapper {
@@ -56,6 +60,7 @@ h2.description {
   min-height: calc(var(--vh, 1vh) * 100);
   position: relative;
   width: 100vw;
+  flex-direction: column;
 }
 
 #footer {

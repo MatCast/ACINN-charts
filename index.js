@@ -1,3 +1,4 @@
+//  http://meteo145.uibk.ac.at/innsbruck/7
 const dataURL = 'data.json';
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
@@ -24,7 +25,7 @@ function updateTemperature(chart) {
     const temperature = document.querySelector('.temperature');
     temperature.innerHTML = data.tl[data.tl.length - 1] + '&deg;C';
     const epoch = data.datumsec[data.datumsec.length - 1];
-    const date = moment(epoch).format('dddd MMMM Do YYYY, h:mm:ss a');
+    const date = moment(epoch).format('YYYY-MM-DD HH:mm');
     const description = document.querySelector('.description');
     description.innerHTML = 'Innsbruck University Temperature on <br>' + date;
     addData(chart, data.datumsec, data.tl)
@@ -41,7 +42,7 @@ var chart = new Chart(ctx, {
         datasets: [{
             label: 'Temeprature',
             // backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: '#29a6f6',
             data: [
               // {x: new Date(), y: 175},
               // {x: new Date(), y: 176},
@@ -51,15 +52,23 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
-        scales: {
-            xAxes: [{
-                type: 'time',
-                time: {
-                  displayFormats: {
-                      hour: 'YYYY-MM-DD HH:mm'
-                  }
+      layout: {
+            padding: {
+                left: 50,
+                right: 50,
+                top: 50,
+                bottom: 50
+            },
+          },
+      scales: {
+          xAxes: [{
+              type: 'time',
+              time: {
+                displayFormats: {
+                    hour: 'YYYY-MM-DD HH:mm'
                 }
-            }]
+              }
+          }]
         }
     }
 });
