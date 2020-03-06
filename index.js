@@ -29,7 +29,10 @@ function updateTemperature(chart) {
     const date = moment(epoch).format('YYYY-MM-DD HH:mm');
     const description = document.querySelector('.description');
     description.innerHTML = 'Innsbruck University Temperature on <br>' + date;
-    addData(chart, data.datumsec, data.tl)
+    const newDatSet = formatDataSet('tl', data);
+    const newLabels = data.datumsec;
+    updateChart(chart, newLabels, newDatSet);
+    addDataSet(chart, formatDataSet('tp', data));
   });
 }
 var ctx = document.getElementById('tempChart').getContext('2d');
@@ -96,7 +99,7 @@ function addData(chart, labelArr, dataArr) {
   labelArr.forEach((label) => {
     // const epoch = label;
     const date = moment(label);
-    chart.data.labels.push(date)
+    chart.data.labels.push(date);
   });
   dataArr.forEach((data) => {
     chart.data.datasets.forEach((dataset) => {
@@ -107,21 +110,30 @@ function addData(chart, labelArr, dataArr) {
   chart.update();
 }
 
-function removeDataSet(chart) {
-  chart.data.datasets.forEach((dataset) => {
-    dataset.pop();
-  });
+function removeDataSets(chart) {
+  chart.data.datasets = [];
 }
 
 function addDataSet(chart, newDatSet) {
-  chart.data.datasets.forEach((dataset) => {
-    dataset.push(newDatSet);
+  chart.data.datasets.push(newDatSet);
+  chart.update();
+}
+
+function updateLabels(chart, newLabels) {
+  chart.data.labels = [];
+  newLabels.forEach((label) => {
+    chart.data.labels.push(label);
   });
 }
 
 function updateDataSet(chart, newDatSet) {
-  removeDataset(chart);
+  removeDataSets(chart);
   addDataSet(chart, newDatSet);
+  chart.update();
+}
+function updateChart(chart, newLabels, newDataSet){
+  updateLabels(chart, newLabels);
+  updateDataSet(chart, newDataSet);
 }
 
 const dataMap = {
@@ -155,19 +167,13 @@ const dataMap = {
   }
 };
 
-var newDataset = {
-  label: "Vendas",
-  backgroundColor: 'rgba(99, 255, 132, 0.2)',
-  borderColor: 'rgba(99, 255, 132, 1)',
-  borderWidth: 1,
-  data: [10, 20, 30, 40, 50, 60, 70],
-}
-
-
-
-function formatDataSet(data) {
-
+function formatDataSet(key, jsonData) {
   const newDataset = {
-
-  }
+    label: dataMap[key].label,
+    backgroundColor: dataMap[key].color,
+    borderColor: dataMap[key].color,
+    data: jsonData[key],
+    fill: false,
+  };
+  return newDataset;
 }
