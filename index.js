@@ -1,24 +1,24 @@
 //  http://meteo145.uibk.ac.at/innsbruck/7
 const dataURL = 'data.json';
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-let vh = window.innerHeight * 0.01;
-// Then we set the value in the --vh custom property to the root of the document
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-// We listen to the resize event
-window.addEventListener('resize', () => {
-    // We execute the same script as before
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
-
-window.onload = showViewport;
-window.onresize = showViewport;
-
-function showViewport() {
-  var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-  var height= Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-}
+// let vh = window.innerHeight * 0.01;
+// // Then we set the value in the --vh custom property to the root of the document
+// document.documentElement.style.setProperty('--vh', `${vh}px`);
+//
+// // We listen to the resize event
+// window.addEventListener('resize', () => {
+//     // We execute the same script as before
+//     let vh = window.innerHeight * 0.01;
+//     document.documentElement.style.setProperty('--vh', `${vh}px`);
+// });
+//
+// window.onload = showViewport;
+// window.onresize = showViewport;
+//
+// function showViewport() {
+//   var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+//   var height= Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+// }
 
 function updateTemperature(chart) {
   d3.json(dataURL).then(function(data) {
@@ -42,7 +42,7 @@ var chart = new Chart(ctx, {
         datasets: [{
             label: 'Temeprature',
             // backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: '#29a6f6',
+            borderColor: '#43A0C3',
             data: [
               // {x: new Date(), y: 175},
               // {x: new Date(), y: 176},
@@ -52,12 +52,19 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+      elements: {
+                    point:{
+                        radius: 1
+                    },
+                  },
+      responsive: true,
+      maintainAspectRatio: false,
       layout: {
             padding: {
-                left: 50,
-                right: 50,
-                top: 50,
-                bottom: 50
+                left: 10,
+                right: 10,
+                top: 10,
+                bottom: 10
             },
           },
       scales: {
@@ -65,7 +72,7 @@ var chart = new Chart(ctx, {
               type: 'time',
               time: {
                 displayFormats: {
-                    hour: 'YYYY-MM-DD HH:mm'
+                    hour: 'MMM DD HH:mm'
                 }
               }
           }]
@@ -98,3 +105,26 @@ function addData(chart, labelArr, dataArr) {
 
     chart.update();
 }
+
+function removeDataSet(chart){
+  chart.data.datasets.forEach((dataset) => {
+    dataset.pop();
+  });
+}
+
+function addDataSet(chart, newDatSet){
+  chart.data.datasets.forEach((dataset) => {
+    dataset.push(newDatSet);
+  });
+}
+
+function updateDataSet(chart, newDatSet){
+  removeDataset(chart);
+  addDataSet(chart, newDatSet);
+}
+
+function mapData(data){
+
+}
+
+function formatDataSet(data)

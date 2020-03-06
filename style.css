@@ -48,13 +48,17 @@ a:active {
   font-size: 2.5vmin;
 }
 
+.chartjs-chart {
+  min-height: 500px;
+}
+
 #page-wrapper {
-  -moz-animation: colorchange 30s ease infinite;
+  /* -moz-animation: colorchange 30s ease infinite;
   -o-animation: colorchange 30s ease infinite;
   -webkit-animation: colorchange 30s ease infinite;
   animation: colorchange 30s ease infinite;
   background: linear-gradient(270deg, #73c4f7, #f7ee73, #f7c073, #f77a73);
-  background-size: 800% 800%;
+  background-size: 800% 800%; */
   display: flex;
   min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
   min-height: calc(var(--vh, 1vh) * 100);
