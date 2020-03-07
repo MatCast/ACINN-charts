@@ -85,6 +85,7 @@ var chart = new Chart(ctx, {
       xAxes: [{
         type: 'time',
         time: {
+          tooltipFormat:'YYYY-MM-DD HH:mm',
           displayFormats: {
             hour: 'MMM DD HH:mm'
           }
@@ -127,6 +128,7 @@ var chart = new Chart(ctx, {
     }
   }
 });
+
 updateTemperature(chart);
 let timer = new Date();
 
@@ -139,30 +141,17 @@ function checkLastModified() {
 }
 let interval = setInterval(checkLastModified, 500);
 
-function addData(chart, labelArr, dataArr) {
-  labelArr.forEach((label) => {
-    // const epoch = label;
-    const date = moment(label);
-    chart.data.labels.push(date);
-  });
-  dataArr.forEach((data) => {
-    chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(data);
-    });
-  });
-
-  chart.update();
-}
-
+// Removes all datasets from the chart
 function removeDataSets(chart) {
   chart.data.datasets = [];
 }
 
+// Adds single dataset to the chart
 function addDataSet(chart, newDatSet) {
   chart.data.datasets.push(newDatSet);
-  chart.update();
 }
 
+// Updates chart lables removing old ones
 function updateLabels(chart, newLabels) {
   chart.data.labels = [];
   newLabels.forEach((label) => {
@@ -170,6 +159,7 @@ function updateLabels(chart, newLabels) {
   });
 }
 
+// Updates all datasets of the chart removing old ones
 function updateDataSets(chart, newDatSets) {
   removeDataSets(chart);
   newDatSets.forEach((newDatSet) => {
@@ -178,11 +168,13 @@ function updateDataSets(chart, newDatSets) {
   chart.update();
 }
 
+// Completely updates the chart (datasets and labels)
 function updateChart(chart, newLabels, newDataSets) {
   updateLabels(chart, newLabels);
   updateDataSets(chart, newDataSets);
 }
 
+// Round Precipitation to 1 decimal and remove negative values
 function removeNegativeRR(rr) {
   rr.forEach((prec, i) => {
     if (prec < 0) {
@@ -191,13 +183,13 @@ function removeNegativeRR(rr) {
     rr[i] = prec.toFixed(1);
   });
 }
-
+// Round sunshine hours to 1 decimal
 function roundSunshine(so) {
   so.forEach((sun, i) => {
       so[i] = sun.toFixed(1);
   });
 }
-
+// Map datasets according as needed (colors, ecc)
 const dataMap = {
   'rr': {
     'label': 'Precipitation',
