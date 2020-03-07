@@ -16,9 +16,16 @@
   </head>
   <body>
     <div id="page-wrapper">
-      <div class="temperature-wrapper">
-        <h2 class="description"></h2>
-        <h1 class="temperature"></h1>
+      <h2 class="description"></h2>
+      <div class="current-values">
+        <div class="temperature-wrapper">
+          <h2 class="description">Temperature</h2>
+          <h1 class="value" id="temp-value"></h1>
+        </div>
+        <div class="wind-wrapper">
+          <h2 class="description">Wind</h2>
+          <h1 class="value"id="wind-value"></h1>
+        </div>
       </div>
       <div class="chart-wrapper">
         <canvas id="tempChart" class="chartjs-chart"></canvas>

@@ -22,11 +22,23 @@ a:active {
   color: #26a6f6;
 }
 
+.current-values {
+  display: flex;
+  width: 100%;
+}
+
 .temperature-wrapper {
   margin: auto;
   padding-bottom: 2.5rem;
   text-align: center;
-  width: 100%;
+  width: 50%;
+}
+
+.wind-wrapper {
+  margin: auto;
+  padding-bottom: 2.5rem;
+  text-align: center;
+  width: 50%;
 }
 
 .chart-wrapper {
@@ -40,16 +52,18 @@ a:active {
   margin: 2rem;
 } */
 
-.temperature {
+.temperature-wrapper .temperature {
   font-size: 5vmin;
 }
 
 .description {
   font-size: 2.5vmin;
+  width: 100%;
+  text-align: center;
 }
 
 .chartjs-chart {
-  min-height: 500px;
+  min-height: 50vmin;
 }
 
 #page-wrapper {
@@ -60,11 +74,11 @@ a:active {
   background: linear-gradient(270deg, #73c4f7, #f7ee73, #f7c073, #f77a73);
   background-size: 800% 800%; */
   display: flex;
+  flex-direction: column;
   min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
   min-height: calc(var(--vh, 1vh) * 100);
   position: relative;
   width: 100vw;
-  flex-direction: column;
 }
 
 #footer {
@@ -73,11 +87,11 @@ a:active {
   bottom: 0;
   box-sizing: border-box;
   color: black;
+  font-size: 2vmin;
   /* height: 2.5rem; */
   padding: 1rem;
   position: absolute;
   width: 100%;
-  font-size: 2vmin;
 }
 
 @-webkit-keyframes colorchange {
