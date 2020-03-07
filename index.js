@@ -26,13 +26,19 @@ function updateTemperature(chart) {
     const temperature = document.querySelector('.temperature');
     temperature.innerHTML = data.tl[data.tl.length - 1] + '&deg;C';
     const epoch = data.datumsec[data.datumsec.length - 1];
+    removeNegativeRR(data.rr);
+    roundSunshine(data.so);
     const date = moment(epoch).format('YYYY-MM-DD HH:mm');
     const description = document.querySelector('.description');
     description.innerHTML = 'Innsbruck University Temperature on <br>' + date;
-    const newDatSet = formatDataSet('tl', data);
+    const newDatSets = [
+      formatDataSet('tl', data),
+      formatDataSet('tp', data),
+      formatDataSet('rr', data),
+      formatDataSet('so', data)
+    ];
     const newLabels = data.datumsec;
-    updateChart(chart, newLabels, newDatSet);
-    addDataSet(chart, formatDataSet('tp', data));
+    updateChart(chart, newLabels, newDatSets);
   });
 }
 var ctx = document.getElementById('tempChart').getContext('2d');
@@ -56,6 +62,10 @@ var chart = new Chart(ctx, {
 
   // Configuration options go here
   options: {
+    tooltips: {
+      mode: 'x-axis',
+      intersect: true,
+    },
     elements: {
       point: {
         radius: 1
@@ -78,8 +88,42 @@ var chart = new Chart(ctx, {
           displayFormats: {
             hour: 'MMM DD HH:mm'
           }
+        },
+        gridLines: {
+          display: false
+        },
+      }],
+      yAxes: [{
+          id: 'Temperature',
+          type: 'linear',
+          position: 'left',
+          gridLines: {
+            display: false
+          },
+        },
+        {
+          id: 'Precipitation',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            min: 0
+          },
+          gridLines: {
+            display: false
+          },
+        },
+        {
+          id: 'Sunshine',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            min: 0
+          },
+          gridLines: {
+            display: false
+          },
         }
-      }]
+      ]
     }
   }
 });
@@ -126,44 +170,76 @@ function updateLabels(chart, newLabels) {
   });
 }
 
-function updateDataSet(chart, newDatSet) {
+function updateDataSets(chart, newDatSets) {
   removeDataSets(chart);
-  addDataSet(chart, newDatSet);
+  newDatSets.forEach((newDatSet) => {
+    addDataSet(chart, newDatSet);
+  });
   chart.update();
 }
-function updateChart(chart, newLabels, newDataSet){
+
+function updateChart(chart, newLabels, newDataSets) {
   updateLabels(chart, newLabels);
-  updateDataSet(chart, newDataSet);
+  updateDataSets(chart, newDataSets);
+}
+
+function removeNegativeRR(rr) {
+  rr.forEach((prec, i) => {
+    if (prec < 0) {
+      rr[i] = 0;
+    }
+    rr[i] = prec.toFixed(1);
+  });
+}
+
+function roundSunshine(so) {
+  so.forEach((sun, i) => {
+      so[i] = sun.toFixed(1);
+  });
 }
 
 const dataMap = {
   'rr': {
     'label': 'Precipitation',
-    'color': 'rgb(0, 87, 255)'
+    'color': 'rgb(67, 160, 195)',
+    'fill': true,
+    'yAxisID': 'Precipitation',
   },
   'tl': {
     'label': 'Temperature',
-    'color': 'rgb(225, 101, 26)'
+    'color': 'RGB(255, 69, 0)',
+    'fill': false,
+    'yAxisID': 'Temperature',
   },
   'tp': {
     'label': 'Dewpoint',
-    'color': 'RGB(0, 255, 255)'
+    'color': 'RGB(0, 128, 128)',
+    'fill': false,
+    'yAxisID': 'Temperature',
   },
   'p': {
     'label': 'Pressure',
-    'color': 'RGB(75, 0, 130)'
+    'color': 'RGB(75, 0, 130)',
+    'fill': false,
+    'yAxisID': 'Pressure',
   },
   'so': {
     'label': 'Sunshine',
-    'color': 'rgb(255, 215, 0)'
+    'color': 'rgb(255, 215, 0)',
+    'fill': true,
+    'yAxisID': 'Sunshine',
   },
   'ff': {
     'label': 'Windspeed',
-    'color': 'RGB(46, 139, 87)'
+    'color': 'RGB(46, 139, 87)',
+    'fill': false,
+    'yAxisID': 'Windspeed',
   },
   'dd': {
     'label': 'Winddirection',
-    'color': 'rgb(0, 0, 0)'
+    'color': 'rgb(0, 0, 0)',
+    'fill': false,
+    'yAxisID': 'Winddirection',
   }
 };
 
@@ -173,7 +249,8 @@ function formatDataSet(key, jsonData) {
     backgroundColor: dataMap[key].color,
     borderColor: dataMap[key].color,
     data: jsonData[key],
-    fill: false,
+    fill: dataMap[key].fill,
+    yAxisID: dataMap[key].yAxisID,
   };
   return newDataset;
 }
