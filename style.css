@@ -46,19 +46,25 @@ a:active {
   margin: 2rem;
 } */
 
-.temperature-wrapper .temperature {
-  font-size: 5vmin;
+.values-wrapper .value {
+  font-size: 1.8rem;
 }
 
-.description {
-  font-size: 2.5vmin;
+.station-time {
+  font-size: 1.2rem;
   width: 100%;
   text-align: center;
   padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.value-description {
+  font-size: 1rem;
+  text-align: center;
 }
 
 .chartjs-chart {
-  min-height: 50vmin;
+  min-height: 360px;
 }
 
 #page-wrapper {

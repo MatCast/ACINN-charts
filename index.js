@@ -255,7 +255,7 @@ function updateTemperature(charts) {
     wind.innerHTML = data.ff[data.ff.length - 1] + 'm/s ' + ddWind;
     const epoch = data.datumsec[data.datumsec.length - 1];
     const date = moment(epoch).format('YYYY-MM-DD HH:mm');
-    const description = document.querySelector('.description');
+    const description = document.querySelector('.station-time');
     description.innerHTML = 'Innsbruck University at <br>' + date;
     updataTempChart(charts[0], data);
     updataPressChart(charts[1], data);
