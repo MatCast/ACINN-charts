@@ -252,11 +252,11 @@ function updateTemperature(charts) {
     temperature.innerHTML = data.tl[data.tl.length - 1] + '&deg;C';
     const wind = document.querySelector('#wind-value');
     let ddWind = degToCard(data.dd[data.dd.length - 1]);
-    wind.innerHTML = data.ff[data.ff.length - 1] + ' ' + ddWind;
+    wind.innerHTML = data.ff[data.ff.length - 1] + 'm/s ' + ddWind;
     const epoch = data.datumsec[data.datumsec.length - 1];
     const date = moment(epoch).format('YYYY-MM-DD HH:mm');
     const description = document.querySelector('.description');
-    description.innerHTML = 'Innsbruck University on <br>' + date;
+    description.innerHTML = 'Innsbruck University at <br>' + date;
     updataTempChart(charts[0], data);
     updataPressChart(charts[1], data);
   });
