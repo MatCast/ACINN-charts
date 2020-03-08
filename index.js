@@ -61,7 +61,7 @@ const dataMap = {
 };
 //  data: http://meteo145.uibk.ac.at/innsbruck/7
 // http://meteo145.uibk.ac.at/obergurgl/7
-const dataURL = 'data.json';
+const dataURL = 'innsbruck/data.json';
 //  temperature chart
 const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'), {
   // The type of chart we want to create
