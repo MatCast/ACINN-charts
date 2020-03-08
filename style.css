@@ -27,16 +27,10 @@ a:active {
   width: 100%;
 }
 
-.temperature-wrapper {
+.values-wrapper {
   margin: auto;
-  padding-bottom: 2.5rem;
-  text-align: center;
-  width: 50%;
-}
-
-.wind-wrapper {
-  margin: auto;
-  padding-bottom: 2.5rem;
+  padding-bottom: 0
+  .5rem;
   text-align: center;
   width: 50%;
 }
@@ -60,6 +54,7 @@ a:active {
   font-size: 2.5vmin;
   width: 100%;
   text-align: center;
+  padding-top: 1rem;
 }
 
 .chartjs-chart {

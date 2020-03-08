@@ -1,4 +1,3 @@
-//  data: http://meteo145.uibk.ac.at/innsbruck/7
 // attributes: ["rr", "dd", "tp", "p", "tl", "so", "ff", "datumsec"]
 // Map datasets as needed (colors, ecc)
 // from here you can configure any option for each of the weather vairable
@@ -60,8 +59,9 @@ const dataMap = {
     'pointRadius': 2,
   }
 };
-
+//  data: http://meteo145.uibk.ac.at/innsbruck/7
 const dataURL = 'data.json';
+//  temperature chart
 const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'), {
   // The type of chart we want to create
   type: 'line',
@@ -92,7 +92,7 @@ const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'
       xAxes: [{
         type: 'time',
         time: {
-          tooltipFormat:'YYYY-MM-DD HH:mm',
+          tooltipFormat: 'YYYY-MM-DD HH:mm',
           displayFormats: {
             hour: 'MMM DD HH:mm'
           }
@@ -102,11 +102,11 @@ const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'
         },
       }],
       yAxes: [{
-        scaleLabel: {
-        display: true,
-        labelString: 'Temperature [\xB0C]',
-        fontColor: dataMap.tl.color,
-      },
+          scaleLabel: {
+            display: true,
+            labelString: 'Temperature [\xB0C]',
+            fontColor: dataMap.tl.color,
+          },
           id: 'Temperature',
           type: 'linear',
           position: 'left',
@@ -116,10 +116,10 @@ const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'
         },
         {
           scaleLabel: {
-          display: true,
-          labelString: 'Precipitation [mm/h]',
-          fontColor: dataMap.rr.color,
-        },
+            display: true,
+            labelString: 'Precipitation [mm/h]',
+            fontColor: dataMap.rr.color,
+          },
           id: 'Precipitation',
           type: 'linear',
           position: 'right',
@@ -132,10 +132,10 @@ const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'
         },
         {
           scaleLabel: {
-          display: true,
-          labelString: 'Sunshine Duration [min/10min]',
-          fontColor: dataMap.so.color,
-        },
+            display: true,
+            labelString: 'Sunshine Duration [min/10min]',
+            fontColor: dataMap.so.color,
+          },
           id: 'Sunshine',
           type: 'linear',
           position: 'right',
@@ -151,6 +151,7 @@ const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'
   }
 });
 
+//  pressure chart
 const pressChart = new Chart(document.getElementById('pressChart').getContext('2d'), {
   // The type of chart we want to create
   type: 'line',
@@ -180,12 +181,11 @@ const pressChart = new Chart(document.getElementById('pressChart').getContext('2
     scales: {
       xAxes: [{
         scaleLabel: {
-        display: true,
-        labelString: 'Date'
-      },
+          display: true,
+        },
         type: 'time',
         time: {
-          tooltipFormat:'YYYY-MM-DD HH:mm',
+          tooltipFormat: 'YYYY-MM-DD HH:mm',
           displayFormats: {
             hour: 'MMM DD HH:mm'
           }
@@ -195,11 +195,11 @@ const pressChart = new Chart(document.getElementById('pressChart').getContext('2
         },
       }],
       yAxes: [{
-        scaleLabel: {
-        display: true,
-        labelString: 'Pressure [hPa]',
-        fontColor: dataMap.p.color,
-      },
+          scaleLabel: {
+            display: true,
+            labelString: 'Pressure [hPa]',
+            fontColor: dataMap.p.color,
+          },
           id: 'Pressure',
           type: 'linear',
           position: 'left',
@@ -209,10 +209,10 @@ const pressChart = new Chart(document.getElementById('pressChart').getContext('2
         },
         {
           scaleLabel: {
-          display: true,
-          labelString: 'Wind Direction [\xB0]',
-          fontColor: dataMap.dd.color,
-        },
+            display: true,
+            labelString: 'Wind Direction [\xB0]',
+            fontColor: dataMap.dd.color,
+          },
           id: 'Winddirection',
           type: 'linear',
           position: 'right',
@@ -225,10 +225,10 @@ const pressChart = new Chart(document.getElementById('pressChart').getContext('2
         },
         {
           scaleLabel: {
-          display: true,
-          labelString: 'Wind Speed [m/s]',
-          fontColor: dataMap.ff.color,
-        },
+            display: true,
+            labelString: 'Wind Speed [m/s]',
+            fontColor: dataMap.ff.color,
+          },
           id: 'Windspeed',
           type: 'linear',
           position: 'right',
@@ -260,7 +260,6 @@ function updateTemperature(charts) {
     updataPressChart(charts[1], data);
   });
 }
-
 
 updateTemperature([tempChart, pressChart]);
 let timer = new Date();
@@ -319,7 +318,7 @@ function removeNegativeRR(rr) {
 // Round sunshine hours to 1 decimal
 function roundSunshine(so) {
   so.forEach((sun, i) => {
-      so[i] = sun.toFixed(1);
+    so[i] = sun.toFixed(1);
   });
 }
 
@@ -339,6 +338,7 @@ function formatDataSet(key, jsonData) {
   return newDataset;
 }
 
+// updates the temperature chart
 function updataTempChart(chart, data) {
   removeNegativeRR(data.rr);
   roundSunshine(data.so);
@@ -352,6 +352,7 @@ function updataTempChart(chart, data) {
   updateChart(chart, newLabels, newDatSets);
 }
 
+// updates the pressure chart
 function updataPressChart(chart, data) {
   const newDatSets = [
     formatDataSet('p', data),
@@ -363,38 +364,38 @@ function updataPressChart(chart, data) {
 }
 
 // Transforms wind directions from degrees to cardinal
-function degToCard(deg){
-  if (deg>11.25 && deg<33.75){
+function degToCard(deg) {
+  if (deg > 11.25 && deg < 33.75) {
     return "NNE";
-  }else if (deg>33.75 && deg<56.25){
+  } else if (deg > 33.75 && deg < 56.25) {
     return "ENE";
-  }else if (deg>56.25 && deg<78.75){
+  } else if (deg > 56.25 && deg < 78.75) {
     return "E";
-  }else if (deg>78.75 && deg<101.25){
+  } else if (deg > 78.75 && deg < 101.25) {
     return "ESE";
-  }else if (deg>101.25 && deg<123.75){
+  } else if (deg > 101.25 && deg < 123.75) {
     return "ESE";
-  }else if (deg>123.75 && deg<146.25){
+  } else if (deg > 123.75 && deg < 146.25) {
     return "SE";
-  }else if (deg>146.25 && deg<168.75){
+  } else if (deg > 146.25 && deg < 168.75) {
     return "SSE";
-  }else if (deg>168.75 && deg<191.25){
+  } else if (deg > 168.75 && deg < 191.25) {
     return "S";
-  }else if (deg>191.25 && deg<213.75){
+  } else if (deg > 191.25 && deg < 213.75) {
     return "SSW";
-  }else if (deg>213.75 && deg<236.25){
+  } else if (deg > 213.75 && deg < 236.25) {
     return "SW";
-  }else if (deg>236.25 && deg<258.75){
+  } else if (deg > 236.25 && deg < 258.75) {
     return "WSW";
-  }else if (deg>258.75 && deg<281.25){
+  } else if (deg > 258.75 && deg < 281.25) {
     return "W";
-  }else if (deg>281.25 && deg<303.75){
+  } else if (deg > 281.25 && deg < 303.75) {
     return "WNW";
-  }else if (deg>303.75 && deg<326.25){
+  } else if (deg > 303.75 && deg < 326.25) {
     return "NW";
-  }else if (deg>326.25 && deg<348.75){
+  } else if (deg > 326.25 && deg < 348.75) {
     return "NNW";
-  }else{
+  } else {
     return "N";
   }
 }
