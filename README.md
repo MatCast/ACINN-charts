@@ -5,4 +5,6 @@ It is a reproduction of what was already available on the ACINN website and is n
 
 The aim of this repository is to recreate more or less the same charts with open source software, and to make it as easy as possible to maintain.
 
-It uses [chart.js](https://www.chartjs.org/) to create the charts
+It uses [chart.js](https://www.chartjs.org/) to create the charts.
+
+It is still a work in progress as functions to retrieve data from other stations and to view different days still need to be added.
