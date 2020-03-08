@@ -60,6 +60,7 @@ const dataMap = {
   }
 };
 //  data: http://meteo145.uibk.ac.at/innsbruck/7
+// http://meteo145.uibk.ac.at/obergurgl/7
 const dataURL = 'data.json';
 //  temperature chart
 const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'), {
