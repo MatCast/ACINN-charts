@@ -20,7 +20,7 @@ const dataMap = {
   },
   'tp': {
     'label': 'Dewpoint',
-    'color': 'RGB(0, 128, 128)',
+    'color': 'rgb(1, 103, 103)',
     'fill': false,
     'yAxisID': 'Temperature',
     'showLine': true,
