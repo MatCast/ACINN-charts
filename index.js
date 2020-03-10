@@ -12,7 +12,7 @@ const dataMap = {
   },
   'tl': {
     'label': 'Temperature',
-    'color': 'RGB(255, 69, 0)',
+    'color': 'rgb(255, 69, 0)',
     'fill': false,
     'yAxisID': 'Temperature',
     'showLine': true,
@@ -28,7 +28,7 @@ const dataMap = {
   },
   'p': {
     'label': 'Pressure',
-    'color': 'RGB(71, 14, 143)',
+    'color': 'rgb(71, 14, 143)',
     'fill': false,
     'yAxisID': 'Pressure',
     'showLine': true,
