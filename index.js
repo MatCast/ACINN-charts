@@ -323,6 +323,21 @@ function roundSunshine(so) {
   });
 }
 
+function removeExtremeTemp(tt) {
+  tt.forEach((t, i) => {
+    if (t < -50.0 | t > 50.0) {
+      if (i - 5 > 0){
+        tt[i] = tt[i - 1];
+      } else {
+        tt[i] = tt[i + 1];
+      }
+    }
+  });
+}
+
+function timeWindow(days){
+  return days * 6 * 24;
+}
 
 // Creates a new dataset object to pass to addDataSet()
 function formatDataSet(key, jsonData) {
@@ -343,6 +358,8 @@ function formatDataSet(key, jsonData) {
 function updataTempChart(chart, data) {
   removeNegativeRR(data.rr);
   roundSunshine(data.so);
+  removeExtremeTemp(data.tp);
+  removeExtremeTemp(data.tl);
   const newDatSets = [
     formatDataSet('tl', data),
     formatDataSet('tp', data),
