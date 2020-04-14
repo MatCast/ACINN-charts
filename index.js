@@ -1,6 +1,13 @@
 // attributes: ["rr", "dd", "tp", "p", "tl", "so", "ff", "datumsec"]
 // Map datasets as needed (colors, ecc)
 // from here you can configure any option for each of the weather vairable
+let days = 1;
+const temperature = document.querySelector('#temp-value');
+const description = document.querySelector('.station-time');
+const wind = document.querySelector('#wind-value');
+const timeButtons = document.querySelectorAll('.time-window-button');
+timeButtons.forEach(btn => {btn.addEventListener('click', changeTimeWindow);})
+
 const dataMap = {
   'rr': {
     'label': 'Precipitation',
@@ -160,7 +167,7 @@ const pressChart = new Chart(document.getElementById('pressChart').getContext('2
   // The data for our dataset
   data: {
     labels: [],
-    datasets: []
+    datasets: [],
   },
 
   // Configuration options go here
@@ -248,17 +255,15 @@ const pressChart = new Chart(document.getElementById('pressChart').getContext('2
 
 function updateTemperature(charts) {
   d3.json(dataURL).then(function(data) {
-    const temperature = document.querySelector('#temp-value');
     temperature.innerHTML = data.tl[data.tl.length - 1] + '&deg;C';
-    const wind = document.querySelector('#wind-value');
     let ddWind = degToCard(data.dd[data.dd.length - 1]);
     wind.innerHTML = data.ff[data.ff.length - 1] + 'm/s ' + ddWind;
     const epoch = data.datumsec[data.datumsec.length - 1];
     const date = moment(epoch).format('YYYY-MM-DD HH:mm');
-    const description = document.querySelector('.station-time');
     description.innerHTML = 'Innsbruck University at <br>' + date;
-    updataTempChart(charts[0], data);
-    updataPressChart(charts[1], data);
+    let dataToShow = timeWindow(data, days);
+    updataTempChart(charts[0], dataToShow);
+    updataPressChart(charts[1], dataToShow);
   });
 }
 
@@ -335,8 +340,18 @@ function removeExtremeTemp(tt) {
   });
 }
 
-function timeWindow(days){
-  return days * 6 * 24;
+function timeWindow(data, days){
+  let start = data.tp.length - days * 6 * 24;
+  const dataToShow = {};
+  for (const key in data){
+    dataToShow[key] = data[key].slice(start);
+  }
+  return dataToShow;
+}
+
+function changeTimeWindow(e){
+  days = parseInt(e.target.dataset.day);
+  updateTemperature([tempChart, pressChart]);
 }
 
 // Creates a new dataset object to pass to addDataSet()

@@ -95,6 +95,28 @@ a:active {
   width: 100%;
 }
 
+.time-window{
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
+
+.time-window-button{
+  margin-right: 2px;
+  padding: 5px 10px;
+  background-color: #f39200;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.time-window-button:hover{
+  background-color: #f5a226;
+}
+
+
 @-webkit-keyframes colorchange {
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
