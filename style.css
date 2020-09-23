@@ -105,17 +105,64 @@ a:active {
   color: white;
 }
 
+button {
+  border: none;
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0;
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:focus {
+  border: none;
+  outline: none;
+}
+
+button:active {
+  border: none;
+  outline: none;
+}
+
+button:hover {
+  border: none;
+  outline: none;
+}
+
 .time-window-button{
   margin-right: 2px;
-  padding: 5px 10px;
+  padding: 0.5em 1em;
   background-color: #f39200;
   border-radius: 3px;
   cursor: pointer;
-}
-.time-window-button:hover{
-  background-color: #f5a226;
+  border-width: 0;
+  color: inherit;
+  font-weight: inherit;
+  margin: 2px;
 }
 
+.time-window-button:hover{
+  background-color: #f5a226;
+  border-width: 0;
+}
+
+.time-window-button.active{
+  border: solid 2px #003360;
+  margin: 0;
+}
+
+.time-window-button:active{
+  border-color:#003360;
+  border-style: none;
+}
 
 @-webkit-keyframes colorchange {
     0%{background-position:0% 50%}

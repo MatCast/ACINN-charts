@@ -2,265 +2,278 @@
 // Map datasets as needed (colors, ecc)
 // from here you can configure any option for each of the weather vairable
 let days = 1;
-const temperature = document.querySelector('#temp-value');
-const description = document.querySelector('.station-time');
-const wind = document.querySelector('#wind-value');
-const timeButtons = document.querySelectorAll('.time-window-button');
-timeButtons.forEach(btn => {btn.addEventListener('click', changeTimeWindow);})
+const temperature = document.querySelector("#temp-value");
+const description = document.querySelector(".station-time");
+const wind = document.querySelector("#wind-value");
+const timeButtons = document.querySelectorAll(".time-window-button");
+timeButtons.forEach((btn) => {
+  btn.addEventListener("click", changeTimeWindow);
+});
 
 const dataMap = {
-  'rr': {
-    'label': 'Precipitation',
-    'color': 'rgb(67, 160, 195)',
-    'fill': true,
-    'yAxisID': 'Precipitation',
-    'showLine': true,
-    'pointRadius': 0,
+  rr: {
+    label: "Precipitation",
+    color: "rgb(67, 160, 195)",
+    fill: true,
+    yAxisID: "Precipitation",
+    showLine: true,
+    pointRadius: 0,
   },
-  'tl': {
-    'label': 'Temperature',
-    'color': 'rgb(255, 69, 0)',
-    'fill': false,
-    'yAxisID': 'Temperature',
-    'showLine': true,
-    'pointRadius': 0,
+  tl: {
+    label: "Temperature",
+    color: "rgb(255, 69, 0)",
+    fill: false,
+    yAxisID: "Temperature",
+    showLine: true,
+    pointRadius: 0,
   },
-  'tp': {
-    'label': 'Dewpoint',
-    'color': 'rgb(1, 103, 103)',
-    'fill': false,
-    'yAxisID': 'Temperature',
-    'showLine': true,
-    'pointRadius': 0,
+  tp: {
+    label: "Dewpoint",
+    color: "rgb(1, 103, 103)",
+    fill: false,
+    yAxisID: "Temperature",
+    showLine: true,
+    pointRadius: 0,
   },
-  'p': {
-    'label': 'Pressure',
-    'color': 'rgb(71, 14, 143)',
-    'fill': false,
-    'yAxisID': 'Pressure',
-    'showLine': true,
-    'pointRadius': 0,
+  p: {
+    label: "Pressure",
+    color: "rgba(0, 0, 0)",
+    fill: false,
+    yAxisID: "Pressure",
+    showLine: true,
+    pointRadius: 0,
   },
-  'so': {
-    'label': 'Sunshine',
-    'color': 'rgb(255, 215, 0)',
-    'fill': true,
-    'yAxisID': 'Sunshine',
-    'showLine': true,
-    'pointRadius': 0,
+  so: {
+    label: "Sunshine",
+    color: "rgb(255, 215, 0)",
+    fill: true,
+    yAxisID: "Sunshine",
+    showLine: true,
+    pointRadius: 0,
   },
-  'ff': {
-    'label': 'Windspeed',
-    'color': 'rgb(14, 143, 71)',
-    'fill': false,
-    'yAxisID': 'Windspeed',
-    'showLine': true,
-    'pointRadius': 0,
+  ff: {
+    label: "Windspeed",
+    color: "rgb(14, 143, 71)",
+    fill: false,
+    yAxisID: "Windspeed",
+    showLine: true,
+    pointRadius: 0,
   },
-  'dd': {
-    'label': 'Winddirection',
-    'color': 'rgba(48, 48, 48, 0.8)',
-    'fill': false,
-    'yAxisID': 'Winddirection',
-    'showLine': false,
-    'pointRadius': 2,
-  }
+  dd: {
+    label: "Winddirection",
+    color: "rgb(71, 14, 143, 0.7)",
+    fill: false,
+    yAxisID: "Winddirection",
+    showLine: false,
+    pointRadius: 2,
+  },
 };
-//  data: http://meteo145.uibk.ac.at/innsbruck/7
+// data: http://meteo145.uibk.ac.at/innsbruck/7
 // http://meteo145.uibk.ac.at/obergurgl/7
-const dataURL = 'innsbruck/data.json';
+const dataURL = "innsbruck/data.json";
 //  temperature chart
-const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'), {
-  // The type of chart we want to create
-  type: 'line',
+const tempChart = new Chart(
+  document.getElementById("tempChart").getContext("2d"),
+  {
+    // The type of chart we want to create
+    type: "line",
 
-  // The data for our dataset
-  data: {
-    labels: [],
-    datasets: []
-  },
-
-  // Configuration options go here
-  options: {
-    tooltips: {
-      mode: 'x-axis',
-      intersect: true,
+    // The data for our dataset
+    data: {
+      labels: [],
+      datasets: [],
     },
-    responsive: true,
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10
+
+    // Configuration options go here
+    options: {
+      tooltips: {
+        mode: "x-axis",
+        intersect: true,
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: 10,
+          right: 10,
+          top: 10,
+          bottom: 10,
+        },
+      },
+      scales: {
+        xAxes: [
+          {
+            type: "time",
+            time: {
+              tooltipFormat: "YYYY-MM-DD HH:mm",
+              displayFormats: {
+                hour: "MMM DD HH:mm",
+              },
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "Temperature [\xB0C]",
+              fontColor: dataMap.tl.color,
+            },
+            id: "Temperature",
+            type: "linear",
+            position: "left",
+            gridLines: {
+              display: false,
+            },
+          },
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "Precipitation [mm/h]",
+              fontColor: dataMap.rr.color,
+            },
+            id: "Precipitation",
+            type: "linear",
+            position: "right",
+            ticks: {
+              min: 0,
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "Sunshine Duration [min/10min]",
+              fontColor: dataMap.so.color,
+            },
+            id: "Sunshine",
+            type: "linear",
+            position: "right",
+            ticks: {
+              min: 0,
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+        ],
       },
     },
-    scales: {
-      xAxes: [{
-        type: 'time',
-        time: {
-          tooltipFormat: 'YYYY-MM-DD HH:mm',
-          displayFormats: {
-            hour: 'MMM DD HH:mm'
-          }
-        },
-        gridLines: {
-          display: false
-        },
-      }],
-      yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'Temperature [\xB0C]',
-            fontColor: dataMap.tl.color,
-          },
-          id: 'Temperature',
-          type: 'linear',
-          position: 'left',
-          gridLines: {
-            display: false
-          },
-        },
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'Precipitation [mm/h]',
-            fontColor: dataMap.rr.color,
-          },
-          id: 'Precipitation',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            min: 0
-          },
-          gridLines: {
-            display: false
-          },
-        },
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'Sunshine Duration [min/10min]',
-            fontColor: dataMap.so.color,
-          },
-          id: 'Sunshine',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            min: 0
-          },
-          gridLines: {
-            display: false
-          },
-        }
-      ]
-    }
   }
-});
+);
 
 //  pressure chart
-const pressChart = new Chart(document.getElementById('pressChart').getContext('2d'), {
-  // The type of chart we want to create
-  type: 'line',
+const pressChart = new Chart(
+  document.getElementById("pressChart").getContext("2d"),
+  {
+    // The type of chart we want to create
+    type: "line",
 
-  // The data for our dataset
-  data: {
-    labels: [],
-    datasets: [],
-  },
-
-  // Configuration options go here
-  options: {
-    tooltips: {
-      mode: 'x-axis',
-      intersect: true,
+    // The data for our dataset
+    data: {
+      labels: [],
+      datasets: [],
     },
-    responsive: true,
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10
+
+    // Configuration options go here
+    options: {
+      tooltips: {
+        mode: "x-axis",
+        intersect: true,
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: 10,
+          right: 10,
+          top: 10,
+          bottom: 10,
+        },
+      },
+      scales: {
+        xAxes: [
+          {
+            scaleLabel: {
+              display: true,
+            },
+            type: "time",
+            time: {
+              tooltipFormat: "YYYY-MM-DD HH:mm",
+              displayFormats: {
+                hour: "MMM DD HH:mm",
+              },
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "Pressure [hPa]",
+              fontColor: dataMap.p.color,
+            },
+            id: "Pressure",
+            type: "linear",
+            position: "left",
+            gridLines: {
+              display: false,
+            },
+          },
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "Wind Direction [\xB0]",
+              fontColor: dataMap.dd.color,
+            },
+            id: "Winddirection",
+            type: "linear",
+            position: "right",
+            ticks: {
+              min: 0,
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "Wind Speed [m/s]",
+              fontColor: dataMap.ff.color,
+            },
+            id: "Windspeed",
+            type: "linear",
+            position: "right",
+            ticks: {
+              min: 0,
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+        ],
       },
     },
-    scales: {
-      xAxes: [{
-        scaleLabel: {
-          display: true,
-        },
-        type: 'time',
-        time: {
-          tooltipFormat: 'YYYY-MM-DD HH:mm',
-          displayFormats: {
-            hour: 'MMM DD HH:mm'
-          }
-        },
-        gridLines: {
-          display: false
-        },
-      }],
-      yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'Pressure [hPa]',
-            fontColor: dataMap.p.color,
-          },
-          id: 'Pressure',
-          type: 'linear',
-          position: 'left',
-          gridLines: {
-            display: false
-          },
-        },
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'Wind Direction [\xB0]',
-            fontColor: dataMap.dd.color,
-          },
-          id: 'Winddirection',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            min: 0
-          },
-          gridLines: {
-            display: false
-          },
-        },
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'Wind Speed [m/s]',
-            fontColor: dataMap.ff.color,
-          },
-          id: 'Windspeed',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            min: 0
-          },
-          gridLines: {
-            display: false
-          },
-        }
-      ]
-    }
   }
-});
-
+);
 
 function updateTemperature(charts) {
-  d3.json(dataURL).then(function(data) {
-    temperature.innerHTML = data.tl[data.tl.length - 1] + '&deg;C';
+  d3.json(dataURL).then(function (data) {
+    temperature.innerHTML = data.tl[data.tl.length - 1] + "&deg;C";
     let ddWind = degToCard(data.dd[data.dd.length - 1]);
-    wind.innerHTML = data.ff[data.ff.length - 1] + 'm/s ' + ddWind;
+    wind.innerHTML = data.ff[data.ff.length - 1] + "m/s " + ddWind;
     const epoch = data.datumsec[data.datumsec.length - 1];
-    const date = moment(epoch).format('YYYY-MM-DD HH:mm');
-    description.innerHTML = 'Innsbruck University at <br>' + date;
+    const date = moment(epoch).format("YYYY-MM-DD HH:mm");
+    description.innerHTML = "Innsbruck University at <br>" + date;
     let dataToShow = timeWindow(data, days);
     updataTempChart(charts[0], dataToShow);
     updataPressChart(charts[1], dataToShow);
@@ -330,8 +343,8 @@ function roundSunshine(so) {
 
 function removeExtremeTemp(tt) {
   tt.forEach((t, i) => {
-    if (t < -50.0 | t > 50.0) {
-      if (i - 5 > 0){
+    if ((t < -50.0) | (t > 50.0)) {
+      if (i - 5 > 0) {
         tt[i] = tt[i - 1];
       } else {
         tt[i] = tt[i + 1];
@@ -340,17 +353,19 @@ function removeExtremeTemp(tt) {
   });
 }
 
-function timeWindow(data, days){
+function timeWindow(data, days) {
   let start = data.tp.length - days * 6 * 24;
   const dataToShow = {};
-  for (const key in data){
+  for (const key in data) {
     dataToShow[key] = data[key].slice(start);
   }
   return dataToShow;
 }
 
-function changeTimeWindow(e){
+function changeTimeWindow(e) {
+  timeButtons.forEach( b => b.classList.remove('active'));
   days = parseInt(e.target.dataset.day);
+  e.target.classList.add('active')
   updateTemperature([tempChart, pressChart]);
 }
 
@@ -376,10 +391,10 @@ function updataTempChart(chart, data) {
   removeExtremeTemp(data.tp);
   removeExtremeTemp(data.tl);
   const newDatSets = [
-    formatDataSet('tl', data),
-    formatDataSet('tp', data),
-    formatDataSet('rr', data),
-    formatDataSet('so', data)
+    formatDataSet("tl", data),
+    formatDataSet("tp", data),
+    formatDataSet("rr", data),
+    formatDataSet("so", data),
   ];
   const newLabels = data.datumsec;
   updateChart(chart, newLabels, newDatSets);
@@ -388,9 +403,9 @@ function updataTempChart(chart, data) {
 // updates the pressure chart
 function updataPressChart(chart, data) {
   const newDatSets = [
-    formatDataSet('p', data),
-    formatDataSet('ff', data),
-    formatDataSet('dd', data),
+    formatDataSet("p", data),
+    formatDataSet("ff", data),
+    formatDataSet("dd", data),
   ];
   const newLabels = data.datumsec;
   updateChart(chart, newLabels, newDatSets);
